@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+{% for table_name, table_data in tables.items() %}
+    <h2>{{ table_name }}</h2>
+    <table>
+        <thead>
+            <tr>
+                {% for column_name in table_data.columns %}
+                    <th>{{ column_name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, row in table_data.iterrows() %}
+                <tr>
+                    {% for _, value in row.iteritems() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <a href="{{ url_for('download_table', table_name=table_name, format='csv') }}">Download as CSV</a>
+        <a href="{{ url_for('download_table', table_name=table_name, format='excel') }}">Download as Excel</a>
+        <!--<a href="{{ url_for('download_table', table_name=table_name, format='pdf') }}">Download as PDF</a> -->
+    </div>
+{% endfor %}
+
+</body>
+</html>

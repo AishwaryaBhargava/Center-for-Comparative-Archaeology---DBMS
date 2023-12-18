@@ -1,0 +1,128 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Register</title>
+</head>
+
+<body>
+
+  {% extends 'base.html' %}
+  {% block content %}
+  <section class="container-fluid px-0">
+    <div class="row align-items-center content">
+      <div class="col-md-6 order-2 order-md-1">
+        <img src="{{ url_for('static', filename='images/newRegisterImg.jpeg') }}" alt="" class="img-fluid" width="800"
+          height="500" />
+      </div>
+
+      <div class="col-md-6 order-1 order-md-2"  >
+        <div class="row justify-content-center">
+          <div class="col-10 col-lg-8 md-5 md-md-0 text-center" >
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">x</button>
+            </div>
+            {% endfor %}
+            <!-- <h1>Register Below</h1>
+            <br /> -->
+            <h1 class="name"> 
+              <strong>Registration Form</strong> <i class="fa-solid fa-arrow-right-to-bracket fa-sm"></i>
+            </h1>
+            <form method="POST" style="color: black">
+              {{ form.hidden_tag() }}
+              <!-- First name -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.firstName.label(class="form-label") }}
+                {{ form.firstName(class="form-control") }}
+              </div>
+              <!-- Last name -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.lastName.label(class="form-label") }}
+                {{ form.lastName(class="form-control") }}
+              </div>
+              <!-- Organization -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.org.label(class="form-label") }}
+                {{ form.org(class="form-control") }}
+              </div>
+              <!-- Affiliation -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.affiliation.label(class="form-label") }}
+                {{ form.affiliation(class="form-control") }}
+              </div>
+              <!-- Email -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+              </div>
+              <!-- Password -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+              </div>
+              <!-- Confirm Password -->
+              <div class="form-outline mb-4" style="color: #99582a; font-weight: 100;">
+                {{ form.conPassword.label(class="form-label") }}
+                {{ form.conPassword(class="form-control") }}
+              </div>
+              <!-- Already have an account? -->
+              <div class="text-center text-lg-start mt-4 pt-2">
+
+                {{ form.register(class="btn btn-primary btn-lg", style="
+                background-color: #99582a;
+                border-color: #99582a;
+                border-radius: 1.5rem;
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+                ") }}
+                <p class="small fw-bold mt-2 pt-1 mb-0" style="color: #EA1C2C; font-weight: 100;">
+                  Already have an account?
+                  <a style="color: #99582a; font-weight: 100;" href="{{ url_for('logintail') }}">Login</a>
+                </p>
+              </div>
+              <br>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    $(function () {
+      $(document).scroll(function () {
+        var $nav = $("#mainNavbar");
+        $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+      });
+    });
+    // Initialize the carousel
+    $(document).ready(function () {
+      $("#carouselExampleIndicators").carousel();
+    });
+  </script>
+  {% endblock%}
+</body>
+
+</html>

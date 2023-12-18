@@ -1,0 +1,393 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+    <style>
+        .form-container {
+            display: none;
+        }
+    </style>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <ul class=" mt-5">
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning alert-dismissible fade show text-center submitRequest" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                    </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <section class="container tittlesection">
+        <div class="row">
+            <div class="col-12">
+                <div id="titlebar" parse="true">
+                    <h1 class="name">
+                        <strong> Dashboard >></strong>
+                        <span class="name"><strong> My Resources</strong></span>
+                    </h1>
+
+                    <div class="col-12">
+                        <ul class="alert alert-info list-unstyled mt-5 thankyou-container text-center"
+                            id="thankYouAlert">
+                            <button type="button" id="close_note_25174" class="close" data-dismiss="alert"
+                                data-dismiss-id="25174">&times;</button>
+                            <li>
+                                <span>
+                                    Thank you for registering with us! We're thrilled to have you on board. <i
+                                        class="fa-solid fa-heart fa-xs"></i>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="INFO alert alert-warning greetings-container" id="note_25174" role="alert">
+                        <h2 class="greetings"> Greetings {{firstName}}!</h2>
+                        <p style="margin-bottom: 0% !important;">
+                            Let's get started:
+                        </p>
+                        <ol>
+                            <li>
+                                <a class="todo" href="#" id="submitRequestLink">Add a new resource to an existing
+                                    project</a>                
+                            </li>
+                            <li>
+                                <a class="todo" href="{{ url_for('createRequest')}}" id="submitRequestFormLink">Create a new project </a>
+                                <a href="{{'createRequest'}}" id="submitRequestFormLink">Create a new project</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Greetings Section -->
+    <!-- <section class="container tittlesection">
+        <div class="row">
+            <div class="col-12">
+                <div id="titlebar" parse="true">
+                    <h1 class="name"> <strong>Dashboard >></strong>
+                        <span class="name"><strong> My Resources</strong></span>
+                    </h1>
+                    <hr /> -->
+    <!-- greetings-container -->
+    <!-- <div class="INFO alert alert-warning thankyou-container " id="note_25174" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <h2>Greetings {{current_user.firstName}} {{current_user.lastName}}!</h2>
+                        <p>
+                            Thank you for registering with us! We're thrilled to have you on board. <i
+                                class="fa-solid fa-heart fa-xs"></i>
+                        </p>
+                        Now that your account registration is complete, here are some helpful starting points for you:
+
+                        <ol>
+                            <li>
+                                Engage in collaborative efforts to enhance an established project.
+                            </li>
+                            <li>
+                                Initiate the development of a new project.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section> -->
+
+    <!-- Let's get started - Moderator -->
+
+    <section class="container tittlesection">
+        <div class="row">
+            <div class="col-12">
+                <div id="titlebar" parse="true">
+                    <h1 class="name"> <strong>Dashboard >></strong>
+                        <span class="name"><strong> My Resources</strong></span>
+                    </h1>
+                    <hr />
+                    <!-- greetings-container -->
+                    <div class="INFO alert alert-warning thankyou-container " role="alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <h2>Greetings {{current_user.firstName}} {{current_user.lastName}}!</h2>
+                        {% if current_user.role == 'moderator' %}
+                        <p>
+                            We're pleased to welcome you to our team. <i class="fa-solid fa-heart fa-xs"></i>
+                        </p>
+
+                        As a moderator, you have been granted special access
+                        and permissions on this site, allowing you to carry out the following functions:
+                        <ol>
+                            <li>
+                                Review and Approve Requests Sent by Registered Users To Create a New Project
+                            </li>
+                            <li>
+                                Review and Approve Requests Sent by Registered Users To Contribute To Exisitng Projects
+                            </li>
+                        </ol>
+                        Additionally, You have the opportunity to
+                        <ol>
+                            <li>
+                                Engage in collaborative efforts to enhance an established project.
+
+                            </li>
+                            <li>
+                                Initiate the development of a new project.
+                            </li>
+                        </ol>
+
+                        {% else %}
+                        <p>
+                            Thank you for registering with us! We're thrilled to have you on board. <i
+                                class="fa-solid fa-heart fa-xs"></i>
+                        </p>
+                        Now that your account registration is complete, here are some helpful starting points for you:
+
+                        <ol>
+                            <li>
+                                Engage in collaborative efforts to enhance an established project.
+                            </li>
+                            <li>
+                                Initiate the development of a new project.
+                            </li>
+                        </ol>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Let's get started -->
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="name" style="font-size: 1.5rem;">Hi {{current_user.firstName}}! Let's get started</h4>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                            <div class="card-body" style="background-color: #faedcd;">
+                                <p class="card-text" style="color: #99582a;">
+                                    Engage in collaborative efforts to enhance an established project.
+                                </p>
+                                <a class="todo" href="/cart/add">Submit a request</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                            <div class="card-body" style="background-color: #faedcd;">
+                                <p class="card-text" style="color: #99582a;">
+                                    Initiate the development of a new project.
+                                </p>
+                                <a class="todo" href="{{'createRequest'}}" id="submitRequestFormLink">Submit a
+                                    Request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Moderator view - create new project requests -->
+    {% if current_user.role == 'moderator' %}
+    {% if getReqToCreateProject %}
+    <h2>Review and Approve Requests to Create New Projects</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Sent At</th>
+                <th>Review</th>
+                <!-- Add more table headers for other columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in getReqToCreateProject %}
+            <tr>
+                <td>{{ detail.firstName }} {{ detail.lastName }}</td>
+                <td>{{ detail.title }}</td>
+                <td>{{ detail.request_sent_on }}</td>
+                <td><a href="{{ url_for('review', email = detail.email, id = detail.id) }}" class="nav-link">Review
+                        Request</a></td>
+                <!-- Add more table data for other columns -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+    <!-- Request Status -->
+    <section class="container ">
+        <div class="row">
+            <article class="col-12 results" id="articleBody">
+                <div class="row">
+                    <div class="col-10">
+                        <!-- <h2 class="name">{{current_user.firstName}} {{current_user.lastName}}</h2> -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="name" style="font-size: 1.5rem;">Requests for initiating new projects.</h4>
+                                <div class="row">
+                                    <div class="container">
+                                        <!-- <h2>Your requests to create a new project</h2> -->
+                                        <div class="row">
+                                            {% for row in newProjectReq %}
+                                            <div class="col-sm-6">
+                                                <div class="card bg-light mb-3" style=" border-color: #faedcd;">
+                                                    <div class="card-body" style="background-color: #faedcd;">
+                                                        <h5 class="card-title" style="color: #99582a;">{{ row.title }}
+                                                        </h5>
+                                                        <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                            <strong>Role:</strong> {{ row.role }}
+                                                        </p>
+                                                        <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                            <strong>Status:</strong> {{ row.status }}
+                                                        </p>
+                                                        <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                            <strong>Request Sent On:</strong> {{ row.request_sent_on }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <!-- Resources - dashboard -->
+                    <div class="col-2 ml-auto">
+                        <ul class="nav nav-pills nav-fill nav-list nav-stacked dashboard-nav">
+                            <li class="nav-item"><a class="active nav-link " style="background-color: #99582a;
+                                border-color: #99582a;
+                                color: #e9edc9;
+                                font-weight: 100;" href="/dashboard">Resources</a></li>
+                            <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                    href="/dashboard/rights">Collections</a></li>
+                            <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                    href="/dashboard/bookmarks"> Bookmarks</a></li>
+                            <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                    href="/entity/user/myprofile">My Profile</a></li>
+                            <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                    href="/dashboard/billing">Billing Accounts</a></li>
+                            <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                    href="/export/request">Export</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+
+
+
+
+        <script>
+            $(document).ready(function () {
+                TDAR.notifications.init();
+                TDAR.common.collectionTreeview();
+                $("#myCarousel").carousel('cycle');
+                if ($("#project-selector").val() != '' || $("#collection-selector").val() != '' || $("#statuses").val() != '' || $("#resourceTypes").val() != '') {
+                    console.log("show advanved filters");
+                    $("#divAdvancedFilters").toggleClass("collapse");
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const thankYouAlert = document.getElementById('thankYouAlert');
+
+                // Check if the alert should be displayed based on the session storage flag
+                const shouldDisplayAlert = sessionStorage.getItem('displayThankYouAlert') !== 'false';
+                console.log('Should display alert:', shouldDisplayAlert);
+
+                if (shouldDisplayAlert) {
+                    thankYouAlert.style.display = 'block';
+                }
+
+                // Close the alert and set the session storage flag when the close button is clicked
+                document.getElementById('close_note_25174').addEventListener('click', function () {
+                    thankYouAlert.style.display = 'none';
+                    sessionStorage.setItem('displayThankYouAlert', 'false');
+                    console.log('Session storage flag set to false');
+                });
+            });
+        </script>
+
+
+
+        </article>
+
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var submitRequestLink = document.getElementById('submitRequestLink');
+            var submitRequestFormLink = document.getElementById('submitRequestFormLink');
+            var submitRequestContainer = document.getElementById('submitRequestContainer');
+            var submitRequestFormContainer = document.getElementById('submitRequestFormContainer');
+
+            submitRequestLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                // Show the form for "Submit a Request"
+                submitRequestContainer.style.display = 'block';
+                submitRequestFormContainer.style.display = 'none';
+            });
+
+            submitRequestFormLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                // Show the form for "Submit a Request Form"
+                submitRequestContainer.style.display = 'none';
+                submitRequestFormContainer.style.display = 'block';
+            });
+        });
+    </script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainNavbar");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            });
+        });
+        // Initialize the carousel
+        $(document).ready(function () {
+            $("#carouselExampleIndicators").carousel();
+        });
+    </script>
+    {% endblock%}
+
+</body>
+
+</html>

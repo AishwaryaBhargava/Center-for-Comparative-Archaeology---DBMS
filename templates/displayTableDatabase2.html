@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Display</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-right: 10px;
+        }
+
+        .selected {
+            background-color: #A2D3F6 !important;
+        }
+    </style>
+</head>
+<body>
+
+{% for table_name, table_data in tables.items() %}
+    <h2>{{ table_name }}</h2>
+    <table id="{{ table_name }}_table" class="display">
+        <thead>
+            <tr>
+                {% for column_name in table_data.columns %}
+                    <th>{{ column_name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, row in table_data.iterrows() %}
+                <tr>
+                    {% for _, value in row.items() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <!-- Download links -->
+        <a href="{{ url_for('download_table', table_name=table_name, format='csv') }}">Download as CSV</a>
+        <a href="{{ url_for('download_table', table_name=table_name, format='excel') }}">Download as Excel</a>
+        <!--<a href="{{ url_for('download_table', table_name=table_name, format='pdf') }}">Download as PDF</a> -->
+    </div>
+{% endfor %}
+
+<!-- DataTables Initialization Script -->
+<script>
+    $(document).ready( function () {
+        {% for table_name, _ in tables.items() %}
+            // Initialize DataTables for each table
+            var {{ table_name }}_table = $('#{{ table_name }}_table').DataTable({
+                fixedHeader: true,  // Enable fixed header
+                dom: 'lBfrtip',  // Button configuration
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                select: true  // Enable row selection
+            });
+
+            // Add individual column filtering
+            {{ table_name }}_table.columns().every( function () {
+                var that = this;
+
+                $( 'input', this.header() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                });
+            });
+        {% endfor %}
+    });
+</script>
+
+</body>
+</html>

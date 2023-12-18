@@ -1,0 +1,91 @@
+{{ email }} {{ id }}
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+
+    <title>Review</title>
+</header>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+
+    <section>
+        <div class="container" style="background-color: #faedcd; border-color: #faedcd;">
+            <div class="container" style="padding: 3%;">
+                <br>
+                <h2 class="name" style="margin: 0%;">Hello {{ current_user.firstName }} {{ current_user.lastName }} </h2><br />
+                <p style="font-weight: 100; color: #99582a; font-size: 1.5rem; ">Please review the following
+                    contribute to an exisitng dataset requests</p>
+                <div class="container" style="color: #99582a;">
+                    <ol class="list-unstyled" style="font-weight: 100;">
+                        <li><strong> First Name:</strong> {{ getRequesterDetails.firstName }}</li>
+                        <li><strong>Last Name: </strong>  {{ getRequesterDetails.lastName }} </li>
+                        <li><strong>Organization:</strong>  {{ getRequesterDetails.organisation }}</li>
+                        <li><strong>Affiliation:</strong>  {{ getRequesterDetails.affiliation }}</li>
+                        <li><strong>Email:</strong>  {{ getRequesterDetails.email }}</li>
+                        <li><strong> Title:</strong> {{ contributorDetails.contributional_dataset_name }}</li>
+                        <li><strong> File Path:</strong> {{ requestTable.file_path }}</li>
+                        <li><strong>Status</strong> {{ requestTable.status }}</li>
+                        <li></li>
+                    </ol>
+                </div>
+                <form style="color: #99582a;" action="/reviewContribute/{{ email }}-{{ id }}" method="POST" enctype="multipart/form-data"
+                    class="form-vertical tdarvalidate" data-validate-method="initBasicForm">
+                    {{ form.hidden_tag() }}
+                    {{ form.decision.label(class="form-label") }}<br />
+                    {{ form.decision(class="form-control") }}<br />
+                    {{ form.submit(class="btn btn-primary btn-lg", style="
+                    background-color: #99582a;
+                    border-color: #99582a;
+                    border-radius: 1.5rem;
+                    padding-left: 2.5rem;
+                    padding-right: 2.5rem;
+                    ") }}
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainNavbar");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            });
+        });
+        // Initialize the carousel
+        $(document).ready(function () {
+            $("#carouselExampleIndicators").carousel();
+        });
+    </script>
+    {% endblock%}
+
+</body>
+
+</html>

@@ -1,0 +1,428 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+    <style>
+        .form-container {
+            display: none;
+        }
+    </style>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <br>
+
+    <!-- Let's get started - Moderator -->
+    <section class="container tittlesection">
+        <div class="row">
+            <div class="col-12">
+                <div id="titlebar" parse="true">
+                    <h1 class="name"> <strong>Dashboard >></strong>
+                        <span class="name"><strong> My Resources</strong></span>
+                    </h1>
+                    <hr>
+                    <div class="col-12 text-center">
+                        {% for message in get_flashed_messages() %}
+                        <div class="alert alert-warning alert-dismissible fade show text-center submitRequest"
+                            role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <!-- greetings-container -->
+                    <div class="INFO alert alert-warning thankyou-container " role="alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <h2>Greetings {{current_user.firstName}} {{current_user.lastName}}!</h2>
+                        {% if current_user.role == 'moderator' %}
+                        <p>
+                            We're pleased to welcome you to our team. <i class="fa-solid fa-heart fa-xs"></i>
+                        </p>
+
+                        As a moderator, you have been granted special access
+                        and permissions on this site, allowing you to carry out the following functions:
+                        <ol>
+                            <li>
+                                Review and Approve Requests Sent by Registered Users To Create a New Project
+                            </li>
+                            <li>
+                                Review and Approve Requests Sent by Registered Users To Contribute To Exisitng Projects
+                            </li>
+                        </ol>
+                        Additionally, You have the opportunity to
+                        <ol>
+                            <li>
+                                Engage in collaborative efforts to enhance an established project.
+
+                            </li>
+                            <li>
+                                Initiate the development of a new project.
+                            </li>
+                        </ol>
+
+                        {% else %}
+                        <p>
+                            Thank you for registering with us! We're thrilled to have you on board. <i
+                                class="fa-solid fa-heart fa-xs"></i>
+                        </p>
+                        Now that your account registration is complete, here are some helpful starting points for you:
+
+                        <ol>
+                            <li>
+                                Engage in collaborative efforts to enhance an established project.
+                            </li>
+                            <li>
+                                Initiate the development of a new project.
+                            </li>
+                        </ol>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Let's get started -->
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="name" style="font-size: 1.5rem;">Hi {{current_user.firstName}}! Let's get started</h4>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                            <div class="card-body" style="background-color: #faedcd;">
+                                <p class="card-text" style="color: #99582a;">
+                                    Engage in collaborative efforts to enhance an established project.
+                                </p>
+                                <a class="todo" href="{{'contributionRequestForm'}}">Submit a request</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                            <div class="card-body" style="background-color: #faedcd;">
+                                <p class="card-text" style="color: #99582a;">
+                                    Initiate the development of a new project.
+                                </p>
+                                <a class="todo" href="{{'createRequest'}}" id="submitRequestFormLink">Submit a
+                                    Request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Request Status -->
+    <section class="container">
+        <div class="row">
+            <section class="col-12 results" id="articleBody">
+                <!-- <article class="col-12 results" id="articleBody"> -->
+                <!-- MODERATOR -->
+                <div class="container col-12">
+                    <div class="container col-12">
+                        <div class="row">
+                            <!-- Contributor Requests - col-10 -->
+                            <div class="col-10">
+                                {% if current_user.role == 'moderator' %}
+                                {% if getAllDataOfContributor %}
+                                <h4 class="name" style="font-size: 1.5rem;">Review and Approve Requests to contribute to
+                                    existing datasets</h4>
+                                <div class="row">
+                                    {% for row in getAllDataOfContributor %}
+                                    <div class="col-6">
+                                        <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                                            <div class="card-body" style="background-color: #faedcd;">
+                                                <p class="card-title" style="color: #99582a;"><strong>Contributor
+                                                        ID:</strong>
+                                                    {{ row.contributorId }}</p>
+                                                <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                    <strong>Email:</strong> {{ row.email }}
+                                                </p>
+                                                <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                    <strong>File Path:</strong> {{ row.filePath }}
+                                                </p>
+                                                <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                    <strong>Request Status:</strong> {{ row.status }}
+                                                </p>
+                                                <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                    <strong>Contributes to Dataset:</strong> {{ row.datasetName }}
+                                                </p>
+                                                <p class="card-text text-right">
+                                                    <a style="color: #87a878;"
+                                                        href="{{ url_for('reviewContribute', email=row.email, id=row.contributorId) }}">Review
+                                                        Requests</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+
+                            {% if current_user.role == 'moderator' %}
+                            <!-- Resources - dashboard - col-2 -->
+                            <div class="col-2 ml-auto">
+                                <ul class="nav nav-pills nav-fill nav-list nav-stacked dashboard-nav">
+                                    <li class="nav-item"><a class="active nav-link " style="background-color: #99582a;
+                                                            border-color: #99582a;
+                                                            color: #e9edc9;
+                                                            font-weight: 100;" href="/dashboard">Resources</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="{{create_database}}">Your Databases</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/dashboard/bookmarks"> Collections</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/entity/user/myprofile">My Profile</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/dashboard/billing">Approved</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/export/request">Export</a></li>
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <!-- Navigation - col-2 -->
+                    <div class="container col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Your navigation content here -->
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Moderator view - create new project requests -->
+                    <div class="row">
+                        <div class="col-10">
+                            {% if current_user.role == 'moderator' %}
+                            {% if getReqToCreateProject %}
+                            <p style="font-size: 1.5rem;" class="name">Review and Approve Requests to Create New
+                                Projects
+                            </p>
+                            <div class="row">
+                                <div class="container">
+                                    <div class="row">
+                                        {% for detail in getReqToCreateProject %}
+                                        <div class="col-sm-6">
+                                            <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                                                <div class="card-body" style="background-color: #faedcd;">
+                                                    <p class="card-title" style="color: #99582a; font-weight: 100; ">
+                                                        <strong>Proposed Project:</strong> {{
+                                                        detail.title }}
+                                                    </p>
+                                                    <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                        <strong>Name:</strong> {{ detail.firstName }} {{ detail.lastName
+                                                        }}
+                                                    </p>
+                                                    <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                        <strong>Email:</strong> {{ detail.email }}
+                                                    </p>
+                                                    <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                        <strong>Sent At:</strong> {{ detail.request_sent_on }}
+                                                    </p>
+                                                    <p class="card-text text-center">
+                                                        <a style="color: #87a878; "
+                                                            href="{{ url_for('review', email=detail.email, id=detail.id) }}"
+                                                            class="nav-link">Review Request</a>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <!-- </article> -->
+            </section>
+
+            <section class="col-12 results" id="articleBody">
+                <!-- <article class="col-12 results" id="articleBody"> -->
+                <div class="container col-12">
+                    <!-- COLLABORATOR -->
+                    <div class="container">
+                        <div class="row">
+                            <!-- Your requests to create a new project - col-10 -->
+                            <div class="col-10">
+                                {% if newProjectReq %}
+                                <h4 class="name" style="font-size: 1.5rem;">Your requests to create a new project</h4>
+                                <div class="row">
+                                    {% for row in newProjectReq %}
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="card bg-light" style="border-color: #faedcd;">
+                                            <div class="card-body" style="background-color: #faedcd;">
+                                                <p class="card-title" style="color: #99582a;"><strong>Proposed
+                                                        project:</strong> {{ row.title }}</p>
+                                                <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                    <strong>Status:</strong> {{ row.status }}
+                                                </p>
+                                                <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                    <strong>Request Sent On:</strong> {{ row.request_sent_on }}
+                                                </p>
+                                                {% if row.status == "approve" %}
+                                                <p class="text-right">
+                                                    <a href="{{ url_for('create_database', title=row.title) }}"
+                                                        style="color: #87a878;">Create Database</a>
+                                                </p>
+                                                {% else %}
+                                                <!-- Or add any other content for non-approved roles -->
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Resources - dashboard - col-2 -->
+                            {% if current_user.role == 'registeredUser' %}
+                            <div class="col-2 ml-auto">
+                                <ul class="nav nav-pills nav-fill nav-list nav-stacked dashboard-nav">
+                                    <li class="nav-item"><a class="active nav-link " style="background-color: #99582a;
+                                                            border-color: #99582a;
+                                                            color: #e9edc9;
+                                                            font-weight: 100;" href="/dashboard">Resources</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="{{create_database}}">Your Databases</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/dashboard/bookmarks"> Collections</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/entity/user/myprofile">My Profile</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/dashboard/billing">Approved</a></li>
+                                    <li class="nav-item"><a style="color: #99582a; font-weight: 100;" class=" nav-link"
+                                            href="/export/request">Export</a></li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <br>
+                    </div>
+
+
+
+                    <!-- Contributor New Request -->
+                    <div class="row">
+                        <div class="col-10">
+                            {% if contributeReqs %}
+                            <h4 class="name" style="font-size: 1.5rem;">Your requests to contribute to an existing
+                                project
+                            </h4>
+                            <div class="row">
+                                {% for row in contributorDetails %}
+                                <div class="col-6">
+                                    <div class="card bg-light mb-3" style="border-color: #faedcd;">
+                                        <div class="card-body" style="background-color: #faedcd;">
+                                            <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                <strong>Contributes to Dataset:</strong> {{ row.datasetName }}
+                                            </p>
+                                            <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                <strong>Email:</strong> {{ row.email }}
+                                            </p>
+                                            <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                <strong>File Path:</strong> {{ row.filePath }}
+                                            </p>
+                                            <p class="card-text" style="font-weight: 100; color: #99582a;">
+                                                <strong>Request Status:</strong> {{ row.status }}
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-2">
+                            <ul class="nav nav-pills ">
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- </article> -->
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            TDAR.notifications.init();
+            TDAR.common.collectionTreeview();
+            $("#myCarousel").carousel('cycle');
+            if ($("#project-selector").val() != '' || $("#collection-selector").val() != '' || $("#statuses").val() != '' || $("#resourceTypes").val() != '') {
+                console.log("show advanved filters");
+                $("#divAdvancedFilters").toggleClass("collapse");
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const thankYouAlert = document.getElementById('thankYouAlert');
+
+            // Check if the alert should be displayed based on the session storage flag
+            const shouldDisplayAlert = sessionStorage.getItem('displayThankYouAlert') !== 'false';
+            console.log('Should display alert:', shouldDisplayAlert);
+
+            if (shouldDisplayAlert) {
+                thankYouAlert.style.display = 'block';
+            }
+
+            // Close the alert and set the session storage flag when the close button is clicked
+            document.getElementById('close_note_25174').addEventListener('click', function () {
+                thankYouAlert.style.display = 'none';
+                sessionStorage.setItem('displayThankYouAlert', 'false');
+                console.log('Session storage flag set to false');
+            });
+        });
+    </script>
+    <script>
+        // Initialize the carousel
+        $(document).ready(function () {
+            $("#carouselExampleIndicators").carousel();
+        });
+    </script>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% endblock%}
+</body>
+
+</html>

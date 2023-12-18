@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <title>Login Page</title>
+</header>
+<style>
+  .divider:after,
+  .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+  }
+
+  .h-custom {
+    height: calc(100% - 73px);
+  }
+
+  @media (max-width: 450px) {
+    .h-custom {
+      height: 100%;
+    }
+  }
+</style>
+
+<body>
+
+  {% extends 'base.html' %}
+  {% block content %}
+  <section class="container-fluid px-0">
+    <div class="row align-items-center content">
+      <div class="col-md-6 order-2 order-md-1">
+        <img src="{{ url_for('static', filename='images/LoginPicture.jpeg') }}" alt="" class="img-fluid" width="800"
+          height="700" />
+      </div>
+
+      <div class="col-md-6 order-1 order-md-2">
+        <div class="row justify-content-center">
+          <div class="col-10 col-lg-8 mb-5 mb-md-0 text-center" style="color: #99582a;">
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">x</button>
+            </div>
+            {% endfor %}
+            <form method="POST">
+              <br /><br /><br />
+
+              <h1 class="name">
+                <strong>Login</strong> <i class="fa-solid fa-arrow-right-to-bracket fa-sm"></i>
+              </h1>
+              {{ form.hidden_tag() }}
+              <!-- Email input -->
+              <div class="form-outline mb-4" style="color: #99582a;">
+                {{ form.email.label(class="form-label justify-content lead") }}
+                {{ form.email(class="form-control form-control-lg") }}
+              </div>
+              <!-- Password input -->
+              <div class="form-outline mb-3" style="padding: 0%; margin: 0%">
+                {{ form.password.label(class="form-label lead") }}
+                {{ form.password(class="form-control form-control-lg") }}
+              </div>
+              <!-- Forgot Password -->
+              <div class="fp">
+                <a href="" class="lead">Forgot password?</a>
+              </div>
+
+
+              <div class="text-center text-lg-start mt-4 pt-2">
+
+                {{ form.login(class="btn btn-primary btn-lg", style="
+                background-color: #99582a;
+                border-color: #99582a;
+                border-radius: 1.5rem;
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+                ") }}
+                <p style="color: #c1121f; font-weight: 100;" class="small fw-bold mt-2 pt-1 mb-0">
+                  Dont have an account?
+                  <a style="color: #99582a; font-weight: 100;" href="{{ url_for('register') }}">Register</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Link to Bootstrap JS and Popper.js (if needed) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <!-- Bootstrap JS and dependencies -->
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+
+  <script>
+    $(function () {
+      $(document).scroll(function () {
+        var $nav = $("#mainNavbar");
+        $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+      });
+    });
+    // Initialize the carousel
+    $(document).ready(function () {
+      $("#carouselExampleIndicators").carousel();
+    });
+  </script>
+  {% endblock%}
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+
+    <title>Archeology Database</title>
+</header>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+
+    <section class="container-fluid px-0 content">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div id="headingGroup" class="name text-center d-none d-lg-block mt-5">
+                    <h1 style="color: #EA1C2C;">CENTER OF COMPARATIVE ARCHAEOLOGY </h1>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img class="img-fluid" width="800" height="500"
+                    src="{{ url_for('static', filename='images/Home1.jpeg') }}" alt="" />
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid px-0">
+        <div class="row align-items-center content">
+            <div class="col-md-6 order-2 order-md-1">
+                <img src="{{ url_for('static', filename='images/Home2.jpeg') }}" alt="" class="img-fluid" width="800"
+                    height="500" />
+            </div>
+            <div class="col-md-6 text-center order-1 order-md-2">
+                <div class="row justify-content-center">
+                    <div class="col-10 col-lg-8 blurb mb-5 mb-md-0">
+                        <h2>Archaeology</h2>
+                        <p class="lead">
+                            Archaeology is the study of human history and prehistory through the excavation and
+                            analysis of artifacts, structures, and other physical remains. It seeks to unravel the
+                            mysteries of past civilizations, offering insights into cultural practices, technological
+                            advancements, and societal development. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center content">
+            <div class="col-md-6">
+                <div class="row justify-content-center">
+                    <div class="col-10 col-lg-8 blurb mb-5 mb-md-0 subtopic">
+                        <h2 class="text-center"> <a href="{{ url_for('display_table_database1') }}">Andean Cranial
+                                Trauma Dataset</a></h2>
+                        <h5 class="text-center">Elizabeth N. Arkush</h5>
+                        <p class="lead text-stretch">
+                            The data files below provide counts of evidence of cranial
+                            trauma in skeletal remains across the central Andes gathered
+                            from academic literature. This record is sourced from Torres
+                            Rouff 2013 in Advances 2, with an unidentified state and culture
+                            and is located in the southern highlands region. The source
+                            reports 4 adults with craniofacial injuries (antemortem and
+                            perimortem).
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-target="#carouselExampleIndicators" data-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-target="#carouselExampleIndicators" data-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-target="#carouselExampleIndicators" data-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="{{ url_for('display_table_database1') }}"><img
+                                    src="{{ url_for('static', filename='images/Radiocarban1.jpeg') }}"
+                                    class="d-block w-100" alt="..." /></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ url_for('display_table_database1') }}"><img
+                                    src="{{ url_for('static', filename='images/Radiocarban2.jpeg') }}"
+                                    class="d-block w-100" alt="..." /></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ url_for('display_table_database1') }}"><img
+                                    src="{{ url_for('static', filename='images/Radiocarban3.jpeg') }}"
+                                    class="d-block w-100" alt="..." /></a>
+                            <!-- <img src="{{ url_for('static', filename='images/Radiocarban3.jpeg') }}"
+                                class="d-block w-100" alt="..." /> -->
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
+                        data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
+                        data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center content">
+            <div class="col-md-6 order-2 order-md-1">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-target="#carouselExampleIndicators" data-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-target="#carouselExampleIndicators" data-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-target="#carouselExampleIndicators" data-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="{{ url_for('display_table_database2') }}"><img
+                                    src="{{ url_for('static', filename='images/Cranialtrauma1.jpeg') }}"
+                                    class="d-block w-100" alt="..." /></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ url_for('display_table_database2') }}"></a><img
+                                src="{{ url_for('static', filename='images/Radiocarban2.jpeg') }}" class="d-block w-100"
+                                alt="..." /></a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="{{ url_for('display_table_database2') }}"></a><img
+                                src="{{ url_for('static', filename='images/Radiocarban3.jpeg') }}" class="d-block w-100"
+                                alt="..." /></a>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
+                        data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
+                        data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6 order-1 order-md-2">
+                <div class="row justify-content-center">
+                    <div class="col-10 col-lg-8 blurb mb-5 mb-md-0 subtopic">
+                        <h2 class="text-center"> <a href="{{ url_for('display_table_database2') }}">Radiocarban Da</a>
+                        </h2>
+                        <h5 class="text-center">Elizabeth N. Arkush</h5>
+                        <p class="lead text-right">
+                            The data files below provide counts of evidence of cranial
+                            trauma in skeletal remains across the central Andes gathered
+                            from academic literature. This record is sourced from Torres
+                            Rouff 2013 in Advances 2, with an unidentified state and culture
+                            and is located in the southern highlands region. The source
+                            reports 4 adults with craniofacial injuries (antemortem and
+                            perimortem).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br><br>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainNavbar");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            });
+        });
+        // Initialize the carousel
+        $(document).ready(function () {
+            $("#carouselExampleIndicators").carousel();
+        });
+    </script>
+
+    {% endblock%}
+</body>
+
+</html>

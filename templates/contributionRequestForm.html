@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+    <style>
+        .form-box {
+            width: 400px;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 430px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            margin-left: 130px;
+        }
+    </style>
+    <title>Archeology Database</title>
+</header>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+    <br /><br><br>
+    <section class="container-fluid px-0">
+        <div class="container submitRequest col-6" style="padding: 3%;">
+
+            <h1 class="name">Contribution Request Form</h1>
+            <br>
+            <form action="/contributionRequestForm" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <!-- First name -->
+                <!-- <div  ,style="margin-left: 900px;"> -->
+                <div class="form-outline mb-4" style="font-size: 1.2rem;">
+                    <label for="email">Email:</label>
+                    {{ form.email(class="form-control", placeholder="Enter a valid email", required=true,
+                    value=current_user.email)
+                    }}
+                    <br>
+                    <label for="contributional_dataset_name">Dataset Name to which you are contributing
+                        to:</label>
+                    {{ form.contributional_dataset_name(class="form-control", placeholder="Enter the dataset name",
+                    required=true)
+                    }}
+                    <br>
+                    <label for="file">File (CSV or Excel):</label>
+                    {{ form.file(class="form-control-file", required=true) }}
+                </div>
+                <div class="text-center text-lg-start mt-4 pt-2">
+
+                    {{ form.submit(class="btn btn-primary btn-lg", style="
+                    background-color: #99582a;
+                    border-color: #99582a;
+                    border-radius: 1.5rem;
+                    padding-left: 2.2rem;
+                    padding-right: 2.5rem;
+                    margin-left: 180px;
+                    ") }}
+
+                </div>
+                <br>
+            </form>
+        </div>
+    </section>
+
+
+    {% endblock%}
+</body>
+
+</html>

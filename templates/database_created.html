@@ -1,0 +1,190 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+                integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+
+    <title>Document</title>
+</head>
+
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border: 2px solid #99582a; /* Border color for the entire table */
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px; /* Adjust the padding for better spacing */
+        text-align: left;
+    }
+
+    th {
+        background-color: #faedcd; /* Background color for header cells */
+        color: #99582a; /* Text color for header cells */
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: #faedcd;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .empty-message {
+        text-align: center;
+        font-style: italic;
+        color: #99582a;
+    }
+</style>
+
+
+<body>
+
+    {% extends 'base.html' %}
+    {% block content %}
+    <br>
+
+    <div class="container">
+
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+<!-- 
+
+    <section class="container tittlesection">
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    <h2 class="name">Databases Created</h2>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                               
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Name of the Database</th>
+                                <th>Name of the Table</th>
+                                <th>Columns Created</th>
+                                <th>Role</th>
+                                <th>Database created on</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if dbCreatedByUser %}
+                            {% for row in dbCreatedByUser %}
+                            <tr>
+                                <td>{{ row.id }}</td>
+                                <td>{{ row.email }}</td>
+                                <td>{{ row.title_name }}</td>
+                                <td>{{ row.table_name }}</td>
+                                <td>{{ row.column_names }}</td>
+                                <td>{{ row.role }}</td>
+                                <td>{{ row.request_sent_on }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="7" style="text-align: center;">DB is empty</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                            
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- ... Your HTML code ... -->
+
+<div class="container">
+    <h2 class="name">Databases Created</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <!-- Table Headers -->
+                <th>ID</th>
+                <th>Email</th>
+                <th>Name of the Database</th>
+                <th>Name of the Table</th>
+                <th>Columns Created</th>
+                <th>Role</th>
+                <th>Database created on</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if dbCreatedByUser %}
+            {% for row in dbCreatedByUser %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.email }}</td>
+                <td>{{ row.title_name }}</td>
+                <td>{{ row.table_name }}</td>
+                <td>{{ row.column_names }}</td>
+                <td>{{ row.role }}</td>
+                <td>{{ row.request_sent_on }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="7" class="empty-message">DB is empty</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ... Your HTML code ... -->
+
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainNavbar");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            });
+        });
+        // Initialize the carousel
+        $(document).ready(function () {
+            $("#carouselExampleIndicators").carousel();
+        });
+
+    </script>
+    {% endblock%}
+
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+                integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    {% extends 'base.html' %}
+    {% block content %}
+    <br><br><br>
+    <div class="col-12  text-center">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">x</button>
+        </div>
+        {% endfor %}
+    </div>
+    <section class="container" style="font-weight: 100; color: #99582a">
+        <div class="row">
+            <article class="col-12 results" id="articleBody">
+                <h1 class="name"><strong>{{ user_to_update.firstName }} {{ user_to_update.lastName }}</strong> </h1>
+                <div class="row">
+                    <div class="col-12">
+                        <form id="frmPerson" name="personForm" method="post" enctype="multipart/form-data"
+                            class="form-vertical tdarvalidate" data-validate-method="initBasicForm">
+                            <textarea style="display:none" name="javascriptErrorLog" id="javascriptErrorLog"
+                                class="devconsole oldschool input-block-level" rows="10" cols="20"
+                                maxlength="25600">NOSCRIPT</textarea>
+                            <script>document.getElementById('javascriptErrorLog').value = "";</script>
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="">
+                                        <h2 id="profile" style="font-weight: 100;">Personal Details</h2>
+                                        <input type="hidden" name="id" value="246059" id="frmPerson_id" />
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <!-- first name -->
+                                                <div class="form-group ">
+                                                    {{ form.firstName.label(class="col-form-label form-label") }}
+                                                    {{ form.firstName(class="form-control required input-xlarge
+                                                    form-control", value=user_to_update.firstName) }}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <!-- last name -->
+                                                <div class="form-group ">
+                                                    {{ form.lastName.label(class="col-form-label form-label") }}
+                                                    {{ form.lastName(class="form-control required input-xlarge
+                                                    form-control", value=user_to_update.lastName) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <!-- organizarion -->
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.org.label(class="col-form-label form-label") }}
+                                                    {{ form.org(class="form-control required input-xlarge form-control",
+                                                    value=user_to_update.organisation) }}
+
+                                                </div>
+                                            </div>
+                                            <!-- Phone number -->
+                                            <div class="col-6">
+                                                <!-- last name -->
+                                                <div class="form-group ">
+                                                    {{ form.phone_number.label(class="col-form-label form-label") }}
+                                                    {{ form.phone_number(class="form-control required input-xlarge
+                                                    form-control", value=userdetails_to_update.phone_number) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <!-- email -->
+                                                <div class="form-group ">
+                                                    {{ form.email.label(class="col-form-label form-label") }}
+                                                    {{ form.email(class="form-control required input-xlarge
+                                                    form-control", value=user_to_update.email) }}
+
+                                                </div>
+                                            </div>
+                                            <!-- affiliation -->
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.affiliation.label(class="col-form-label form-label") }}
+                                                    <select id="affiliation" name="affiliation"
+                                                        class="form-control required input-xlarge form-control">
+                                                        {% for option in ['K-12 Student', 'Undergraduate Student',
+                                                        'Graduate Student', 'K-12 Teacher', 'Higher Ed. Faculty',
+                                                        'Independent Researcher', 'Public Agency Archeologist', 'General
+                                                        Public', 'Native American/Indigenous researcher',
+                                                        'NonProfessional/Avocational Archeologist'] %}
+                                                        <option value="{{ option }}" {% if
+                                                            option==user_to_update.affiliation %} selected {% endif %}>
+                                                            {{ option }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- description -->
+                                            <div class="form-group ">
+                                                {{ form.description.label(class="col-form-label form-label") }}
+                                                {{ form.description(class="form-control required input-xlarge
+                                                form-control",
+                                                value=userdetails_to_update.description) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <h2 style="font-weight: 100;" id="password">Password</h2>
+                                    <div class="glide" id="divChangePassword">
+                                        <!-- Password -->
+                                        <div class="form-group ">
+                                            {{ form.password.label(class="col-form-label form-label") }}
+                                            {{ form.password(class="form-control") }}
+                                        </div>
+                                        <!-- confrim Password -->
+                                        <div class="form-group ">
+                                            {{ form.conPassword.label(class="col-form-label form-label") }}
+                                            {{ form.conPassword(class="form-control") }}
+                                        </div>
+                                    </div>
+                                    {{ form.register(class="btn btn-primary btn-lg", style="
+                                    background-color: #99582a;
+                                    border-color: #99582a;
+                                    border-radius: 1.5rem;
+                                    padding-left: 2.5rem;
+                                    padding-right: 2.5rem;
+                                    ") }}
+                                </div>
+                            </div>
+                        </form>
+                        <div id="error"></div>
+                        <script type="text/javascript">
+                            var $frmPerson;
+                            $(function () {
+                                $frmPerson = $('#frmPerson');
+                                TDAR.autocomplete.applyInstitutionAutocomplete($('.institutionAutocomplete'), true);
+                                TDAR.common.initEditPage($('#frmPerson')[0]);
+                                //tack on the confirm-password rules
+                                $("#clearButton").click(function () { $('#fileUploadField').val(''); return false; });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    {% endblock%}
+
+</body>
+
+</html>

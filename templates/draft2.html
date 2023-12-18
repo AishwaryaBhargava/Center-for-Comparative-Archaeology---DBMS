@@ -1,0 +1,200 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+                integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    {% extends 'base.html' %}
+    {% block content %}
+    <br><br><br>
+
+    <div class="col-12 text-center">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">x</button>
+        </div>
+        {% endfor %}
+    </div>
+    <section class="container ">
+        <div class="row">
+            <article class="col-12 results" id="articleBody">
+                <h1>Your Profile: {{ user_to_update.firstName }} {{ user_to_update.lastName }} </h1>
+                <div class="row">
+                    <div class="col-12">
+                        <form action="/profile/{{ user_to_update.email }}" method="POST" enctype="multipart/form-data"
+                            class="form-vertical tdarvalidate" data-validate-method="initBasicForm">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="">
+                                        <h2 id="profile">Personal Details</h2>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.firstName.label(class="col-form-label form-label") }}
+                                                    {{ form.firstName(class="form-control required input-xlarge
+                                                    form-control", value=user_to_update.firstName) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.lastName.label(class="col-form-label form-label") }}
+                                                    {{ form.lastName(class="form-control required input-xlarge
+                                                    form-control", value=user_to_update.lastName) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.org.label(class="col-form-label form-label") }}
+                                                    {{ form.org(class="form-control required input-xlarge form-control",
+                                                    value=user_to_update.organisation) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.phone_number.label(class="col-form-label form-label") }}
+                                                    {{ form.phone_number(class="form-control required input-xlarge
+                                                    form-control", value=userdetails_to_update.phone_number) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.email.label(class="col-form-label form-label") }}
+                                                    {{ form.email(class="form-control required input-xlarge
+                                                    form-control", value=user_to_update.email) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group ">
+                                                    {{ form.affiliation.label(class="col-form-label form-label") }}
+                                                    <select id="affiliation" name="affiliation"
+                                                        class="form-control required input-xlarge form-control">
+                                                        <option value="K-12 Student" {% if
+                                                            user_to_update.affiliation=='K-12 Student' %} selected {%
+                                                            endif %}>K-12 Student</option>
+                                                        <option value="Undergraduate Student" {% if
+                                                            user_to_update.affiliation=='Undergraduate Student' %}
+                                                            selected {% endif %}>Undergraduate Student</option>
+                                                        <option value="Graduate Student" {% if
+                                                            user_to_update.affiliation=='Graduate Student' %} selected
+                                                            {% endif %}>Graduate Student</option>
+                                                        <option value="K-12 Teacher" {% if
+                                                            user_to_update.affiliation=='K-12 Teacher' %} selected {%
+                                                            endif %}>K-12 Teacher</option>
+                                                        <option value="Independent Researcher" {% if
+                                                            user_to_update.affiliation=='Independent Researcher' %}
+                                                            selected {% endif %}>Independent Researcher</option>
+                                                        <option value="Public Agency Archeologist" {% if
+                                                            user_to_update.affiliation=='Public Agency Archeologist' %}
+                                                            selected {% endif %}>Public Agency Archeologist</option>
+                                                        <option value="General Public" {% if
+                                                            user_to_update.affiliation=='General Public' %} selected {%
+                                                            endif %}>General Public</option>
+                                                        <option value="Native American/Indigenous researcher" {% if
+                                                            user_to_update.affiliation=='Native American/Indigenous researcher'
+                                                            %} selected {% endif %}>Native American/Indigenous
+                                                            researcher</option>
+                                                        <option value="NonProfessional/Avocational Archeologist" {% if
+                                                            user_to_update.affiliation=='NonProfessional/Avocational Archeologist'
+                                                            %} selected {% endif %}>NonProfessional/Avocational
+                                                            Archeologist</option>
+                                                        <!-- Add other options with similar logic for selected attribute -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ">
+                                            {{ form.description.label(class="col-form-label form-label") }}
+                                            {{ form.description(class="form-control required input-xlarge form-control",
+                                            value=userdetails_to_update.description) }}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="">
+                                        <h2 id="password">Password</h2>
+
+                                        <div class="glide" id="divChangePassword">
+                                            <div class="form-group ">
+                                                {{ form.password.label(class="col-form-label form-label") }}
+                                                {{ form.password(class="form-control") }}
+                                            </div>
+                                            <div class="form-group ">
+                                                {{ form.conPassword.label(class="col-form-label form-label") }}
+                                                {{ form.conPassword(class="form-control") }}
+                                            </div>
+                                        </div>
+                                        {{ form.register(class="btn btn-primary btn-lg", style="
+                                        background-color: #99582a;
+                                        border-color: #99582a;
+                                        border-radius: 1.5rem;
+                                        padding-left: 2.5rem;
+                                        padding-right: 2.5rem;
+                                        ") }}
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <div id="error"></div>
+                        <script type="text/javascript">
+                            var $frmPerson;
+                            $(function () {
+                                $frmPerson = $('#frmPerson');
+                                TDAR.autocomplete.applyInstitutionAutocomplete($('.institutionAutocomplete'), true);
+                                TDAR.common.initEditPage($('#frmPerson')[0]);
+                                //tack on the confirm-password rules
+                                $("#clearButton").click(function () { $('#fileUploadField').val(''); return false; });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    </div>
+
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainNavbar");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            });
+        });
+    </script>
+    {% endblock%}
+
+</body>
+
+</html>
